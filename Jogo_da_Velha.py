@@ -178,6 +178,7 @@ def main():
     add_players()
 
     while True:
+        board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         for c in range(9):
             print_board()
             player_turn = decide_turn_player(who_goes_first())
