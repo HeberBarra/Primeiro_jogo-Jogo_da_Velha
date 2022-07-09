@@ -174,6 +174,7 @@ def win(turn_player):
 def main():
     global board
     global vitoria
+    vitoria = None
 
     add_players()
 
