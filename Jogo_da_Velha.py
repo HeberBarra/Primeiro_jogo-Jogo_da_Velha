@@ -9,7 +9,7 @@ class Player:
 
     def __init__(self, player_name, score=0, victories=0, defeats=0, draws=0, plays=None):
         if plays is None:
-            plays = set()
+            plays = list()
         self.player_name = player_name
         self.score = score
         self.victories = victories
@@ -27,7 +27,7 @@ class Player:
         self.draws += 1
 
     def add_play(self, position):
-        self.plays.add(position)
+        self.plays.append(position)
 
 
 def clear():
@@ -179,7 +179,6 @@ def main():
     add_players()
 
     while True:
-        board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         for c in range(9):
             print_board()
             player_turn = decide_turn_player(who_goes_first())
@@ -213,7 +212,9 @@ def main():
 
         if new_match in 'syapc':
             print('Comecando nova partida...')
-
+            board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            players[0].plays = []
+            players[1].plays = []
         else:
             break
 
