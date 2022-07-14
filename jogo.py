@@ -1,4 +1,5 @@
 from functions import *
+import colorama
 
 
 def main(players_list=None, add_new_players=True):
@@ -29,8 +30,8 @@ def main(players_list=None, add_new_players=True):
                     board.print_board()
                     print(msg)
                     for index, value in enumerate(players_list):
-                        print(f'Jogador{index + 1}: {value.player_name} | Vitorias: {value.victories}| '
-                              f'Derrotas: {value.defeats} | Empates: {value.draws}')
+                        print(f'Jogador{index + 1}: {value.player_name} | \033[34mVitorias: {value.victories}\033[m| '
+                              f'\033[91mDerrotas: {value.defeats}\033[m | \033[33mEmpates: {value.draws}\033[m')
 
                     break
 
@@ -45,10 +46,13 @@ def main(players_list=None, add_new_players=True):
     except KeyboardInterrupt:
         print('\nVolte mais tarde por favor!')
         print('---FIM-DO-PROGRAMA---')
+        colorama.deinit()
         exit()
 
 
 if __name__ == '__main__':
+    colorama.init()
     main()
     print('\nVolte mais tarde por favor!')
     print('---FIM-DO-PROGRAMA---')
+    colorama.deinit()

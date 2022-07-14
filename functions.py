@@ -71,10 +71,10 @@ def set_play(board, player, turn_player):
     position -= 1
 
     if turn_player == 0:
-        board.add_play_on_board(position, "X")
+        board.add_play_on_board(position, "\033[91mX\033[m")
 
     else:
-        board.add_play_on_board(position, "O")
+        board.add_play_on_board(position, "\033[34mO\033[m")
 
     player.add_play(position)
 
