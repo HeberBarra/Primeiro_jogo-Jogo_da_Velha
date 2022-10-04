@@ -1,6 +1,11 @@
 from Classes import players, boards
 import os
 
+PLAYER_1_SYMBOL  = 'X'
+PLAYER_2_SYMBOL  = 'O'
+PLAYER_1_COLOR   = '\033[91m'
+PLAYER_2_COLOR   = '\033[34m'
+YES_POSIBILITIES = 'ysapc'
 
 def clear():
     if os.name == 'nt':
@@ -9,61 +14,61 @@ def clear():
         os.system('clear')
 
 
-def add_players(players_list):
+def addPlayers():
+    players_list = []
     for time in range(2):
         while True:
             try:
                 player_name = input(f'Digite o nome do jogador{time + 1}: ').strip().capitalize()
-                is_right = input(f'O nome {player_name} para o jogador {time + 1} esta correto?[Y/N]: ').lower()[0]
+                is_right = input(f'O nome {player_name} para o jogador {time + 1} está correto?[Y/N]: ').lower()[0]
 
             except IndexError:
                 print('Digite alguma coisa!')
 
             else:
-                if is_right in 'ysapc':
+                if is_right in YES_POSIBILITIES:
                     break
                 else:
                     print('Digite novamente!')
 
         players_list.append(players.Player(player_name))
 
-
-def first_match():
-    board = boards.Boards()
-    starter = 1
-    return board, starter
+    return players_list
 
 
-def turn_decider(starter):
+def firstMatch():
+    return boards.Boards(), 1
 
-    if starter == 1:
+
+def turnDecider(turn_player):
+    if turn_player == 1:
         return 0
 
     else:
         return 1
 
 
-def set_play(board, player, turn_player):
+def setPlay(board, player, turn_player):
     while True:
         try:
-            position = int(input('Digite o numero de uma posicao do tabuleiro: ').strip())
-            is_right = input('A posicao colocada esta certa?[Y/N]: ').strip().lower()[0]
+            position = int(input('Digite o número de uma posição do tabuleiro: ').strip())
+            is_right = input('A posição colocada está certa?[Y/N]: ').strip().lower()[0]
 
         except ValueError:
-            print('Digite um numero!')
+            print('Digite um número!')
 
         except IndexError:
             print('Digite alguma coisa!')
 
         else:
 
-            if is_right in 'ysapc':
+            if is_right in YES_POSIBILITIES:
 
                 if position in board.table:
                     break
 
                 else:
-                    print('Posicao invalida!')
+                    print('Posição invalida!')
 
             else:
                 print('Digite novamente!')
@@ -71,15 +76,15 @@ def set_play(board, player, turn_player):
     position -= 1
 
     if turn_player == 0:
-        board.add_play_on_board(position, "\033[91mX\033[m")
+        board.add_play_on_board(position, f'{PLAYER_1_COLOR}{PLAYER_1_SYMBOL}\033[m')
 
     else:
-        board.add_play_on_board(position, "\033[34mO\033[m")
+        board.add_play_on_board(position, f'{PLAYER_2_COLOR}{PLAYER_2_SYMBOL}\033[m')
 
     player.add_play(position)
 
 
-def detect_win(board, players_list, starter):
+def detectGameConclusion(board, players_list, starter):
     if players_list[starter].detect_victory():
         if starter == 0:
             players_list[starter + 1].add_defeat()
@@ -92,13 +97,12 @@ def detect_win(board, players_list, starter):
     elif not board.verify_table():
         players_list[0].add_draw()
         players_list[1].add_draw()
-        return f'Empate!'
+        return 'Empate!'
 
-    else:
-        return None
+    return None
 
 
-def new_match(board, players_list):
+def newMatch(board, players_list):
     while True:
         try:
             restart = input('Desejar iniciar uma nova partida?[Y/N]: ').strip().lower()[0]
@@ -107,7 +111,7 @@ def new_match(board, players_list):
             print('Digite alguma coisa!')
 
         else:
-            if restart in 'ysapc':
+            if restart in YES_POSIBILITIES:
                 break
             else:
                 return False, players_list, False
@@ -116,13 +120,13 @@ def new_match(board, players_list):
 
     while True:
         try:
-            new_players = input('Desejar comecar uma partida com novos jogadores?[Y/N}: ').strip().lower()[0]
+            new_players = input('Desejar começar uma partida com novos jogadores?[Y/N}: ').strip().lower()[0]
 
         except IndexError:
             print('Digite alguma coisa!')
 
         else:
-            if new_players in 'ysapc':
+            if new_players in YES_POSIBILITIES:
                 new_players = True
                 break
             else:

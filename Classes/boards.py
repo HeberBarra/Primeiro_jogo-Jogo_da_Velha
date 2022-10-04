@@ -5,8 +5,9 @@ class Boards:
 
     def verify_table(self):
         have_numbers = False
-        for table_position in range(9):
-            if table_position in self.table:
+        
+        for table_pos in range(1, 10):
+            if table_pos in self.table:
                 have_numbers = True
 
         return have_numbers

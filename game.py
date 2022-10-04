@@ -4,26 +4,26 @@ import colorama
 
 def main(players_list=None, add_new_players=True):
 
-    try:
-
-        if players_list is None:
+    if players_list is None:
             players_list = []
 
+    try:
         while True:
             if add_new_players:
-                add_players(players_list)
+                players_list = addPlayers()
 
-            board, starter = first_match()
+            board, starter = firstMatch()
 
             for times in range(9):
-                starter = turn_decider(starter)
+                turn_player = turnDecider(starter)
 
                 clear()
-                board.print_board()
-                print(f'Vez do jogador{starter + 1}: {players_list[starter].player_name}')
 
-                set_play(board, players_list[starter], starter)
-                msg = detect_win(board, players_list, starter)
+                board.print_board()
+                print(f'Vez do jogador{turn_player + 1}: {players_list[turn_player].player_name}')
+
+                setPlay(board, players_list[turn_player], turn_player)
+                msg = detectGameConclusion(board, players_list, turn_player)
 
                 if msg is not None:
                     clear()
@@ -35,7 +35,7 @@ def main(players_list=None, add_new_players=True):
 
                     break
 
-            start_new_match, players_list, add_new_players = new_match(board, players_list)
+            start_new_match, players_list, add_new_players = newMatch(board, players_list)
 
             if not start_new_match:
                 break
